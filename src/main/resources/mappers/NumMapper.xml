@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.techwells.shake.dao.NumMapper" >
+  <resultMap id="BaseResultMap" type="com.techwells.shake.domain.Num" >
+    <id column="number_id" property="numberId" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="activate" property="activate" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+    <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    number_id, number, level, activate, deleted, created_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_number
+    where number_id = #{numberId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_number
+    where number_id = #{numberId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.techwells.shake.domain.Num" >
+    <selectKey resultType="java.lang.Integer" keyProperty="numberId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_number (number, level, activate, 
+      deleted, created_date, update_date
+      )
+    values (#{number,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{activate,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.techwells.shake.domain.Num" >
+    <selectKey resultType="java.lang.Integer" keyProperty="numberId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_number
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="activate != null" >
+        activate,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="activate != null" >
+        #{activate,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.techwells.shake.domain.Num" >
+    update t_number
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="activate != null" >
+        activate = #{activate,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where number_id = #{numberId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.techwells.shake.domain.Num" >
+    update t_number
+    set number = #{number,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      activate = #{activate,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where number_id = #{numberId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- 
+  	 List<Num> selectNumList(Integer level);
+   -->
+  <select id="selectNumList" resultMap="BaseResultMap">
+  	SELECT
+	number
+FROM
+	t_number
+where level=#{level}
+  </select>
+  
+ <!-- 
+ 	List<Num> selectNumByLevel(Integer level);
+  -->
+ <select id="selectNumByLevel" resultMap="BaseResultMap">
+ 	SELECT
+	number,number_id,level
+FROM
+	t_number
+WHERE level=#{level} and deleted=1
+ </select>
+ 
+<!-- 
+	 int reset();  
+ -->
+<update id="reset">
+	UPDATE t_number
+SET deleted = 1
+WHERE
+	deleted = 0
+</update>
+
+<!-- 
+	int countTotalByLevel(Integer level);
+ -->
+<select id="countTotalByLevel" resultType="java.lang.Integer">
+	SELECT
+	count(*)
+FROM
+	t_number
+WHERE
+	level = #{level}
+AND deleted = 1
+</select>
+  
+</mapper>
