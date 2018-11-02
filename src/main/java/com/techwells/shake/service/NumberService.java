@@ -2,6 +2,8 @@ package com.techwells.shake.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.techwells.shake.domain.Num;
+
 /**
  * 编号的service
  * @author 陈加兵
@@ -34,5 +36,13 @@ public interface NumberService {
 	 * @throws Exception
 	 */
 	Object getBoard()throws Exception;
+
+	/**
+	 * 修改
+	 * @param num
+	 * @return
+	 * @throws Exception
+	 */
+	Object modify(Num num)throws Exception;
 	
 }	

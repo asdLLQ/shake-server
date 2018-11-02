@@ -4,12 +4,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.druid.util.StringUtils;
 import com.techwells.shake.domain.Num;
 import com.techwells.shake.service.NumberService;
 import com.techwells.shake.util.ResultInfo;
@@ -62,7 +66,7 @@ public class NumberController {
 	
 	
 	/**
-	 * 获取随机编号
+	 * 重置编号
 	 * @param request
 	 * @return
 	 */
@@ -100,5 +104,50 @@ public class NumberController {
 			return resultInfo;
 		}
 	}
+	
+	
+	@PostMapping("/number/confirm")
+	@ApiOperation(value="确认",hidden=false)
+	@ApiImplicitParams({
+		@ApiImplicitParam(paramType = "query", name = "numberId", dataType="Integer", required = true, value = "编号Id", defaultValue = "1")
+})
+	public Object confirm(HttpServletRequest request){
+		ResultInfo resultInfo=new ResultInfo();
+		String numberId=request.getParameter("numberId");
+		if (StringUtils.isEmpty(numberId)) {
+			resultInfo.setCode("-1");
+			resultInfo.setMessage("编号Id不能为空");
+			return resultInfo;
+		}
+		
+		Num num=new Num();
+		num.setDeleted(0);
+		num.setNumberId(Integer.parseInt(numberId));
+		
+		try {
+			Object object=numberService.modify(num);
+			return object;
+		} catch (Exception e) {
+			resultInfo.setCode("-1");
+			resultInfo.setMessage("异常");
+			return resultInfo;
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

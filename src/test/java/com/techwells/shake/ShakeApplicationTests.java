@@ -40,9 +40,44 @@ public class ShakeApplicationTests {
 				}
 			}
 		}
-		
-		
-		
 	}
+	
+	@Test
+	public void test1() {
+		for(int i=1;i<=12;i++){
+			for(int j=2;j<=18;j++){
+				if (j==2||j==18) {
+					Num num=new Num();
+					num.setCreatedDate(new Date());
+					num.setLevel(2);   //C柜
+					String a="D"+i+"-"+j;  //编号
+					num.setNumber(a);
+					int count=numMapper.insertSelective(num);
+					if (count==0) {
+						System.out.println(a);
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

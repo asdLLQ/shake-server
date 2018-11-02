@@ -2,10 +2,10 @@
 spring:
   datasource:                ## 配置数据源
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://www.emoonbow.com:3306/shake?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://www.lifecrystal.cn:3306/shake?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: Taiwen2017
+    password: 12345
     initialSize: 5
     minIdle: 5
     maxActive: 20

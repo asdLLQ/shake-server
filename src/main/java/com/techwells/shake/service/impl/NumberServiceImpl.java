@@ -42,18 +42,14 @@ public class NumberServiceImpl implements NumberService {
 			}
 			int random=new Random().nextInt(nums.size());   //[0,num.size)   随机数
 			//如果一次随机选择失败，应该继续，不该停止
-			while(true){
 				Num num=nums.get(random);
-				num.setDeleted(0);   //已经被选了
-				int count=numMapper.updateByPrimaryKeySelective(num);
-				//如果更新成功，那么应该返回，否则将要继续
-				if (count==1) {
+//				int count=numMapper.updateByPrimaryKeySelective(num);
+//				//如果更新成功，那么应该返回，否则将要继续
+//				if (count==1) {
 					resultInfo.setTotal(nums.size()-1);
 					resultInfo.setResult(nums.get(random));
 					resultInfo.setMessage("获取成功");
 					return resultInfo;
-				}
-			}
 		}
 	}
 
@@ -77,6 +73,19 @@ public class NumberServiceImpl implements NumberService {
 			resultInfo.setMessage("获取成功");
 			resultInfo.setTotal(1);
 		}
+		return resultInfo;
+	}
+
+	@Override
+	public Object modify(Num num) throws Exception {
+		ResultInfo resultInfo=new ResultInfo();
+		int count=numMapper.updateByPrimaryKeySelective(num);
+		if (count==0) {
+			resultInfo.setCode("-1");
+			resultInfo.setMessage("确认失败");
+			return resultInfo;
+		}
+		resultInfo.setMessage("确认成功");
 		return resultInfo;
 	}
 }
