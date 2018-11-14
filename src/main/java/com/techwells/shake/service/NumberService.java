@@ -1,5 +1,7 @@
 package com.techwells.shake.service;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.techwells.shake.domain.Num;
@@ -44,5 +46,15 @@ public interface NumberService {
 	 * @throws Exception
 	 */
 	Object modify(Num num)throws Exception;
+	
+	
+	/**
+	 * 获取所有的编码
+	 * @return
+	 * @throws Exception
+	 */
+	List<Num> getNotSelectedNumberList()throws Exception;
+	
+	
 	
 }	

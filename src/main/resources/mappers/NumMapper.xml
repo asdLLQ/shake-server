@@ -160,5 +160,19 @@ WHERE
 	level = #{level}
 AND deleted = 1
 </select>
+
+
+<!-- 
+	List<Number> selectNotNumberList();
+ -->
+<select id="selectNotNumberList" resultMap="BaseResultMap">
+SELECT * from t_number WHERE deleted=1
+</select>
+
+
+
+
+
+
   
 </mapper>

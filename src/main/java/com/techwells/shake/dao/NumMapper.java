@@ -28,4 +28,8 @@ public interface NumMapper {
     int reset();  
     
     int countTotalByLevel(Integer level);
+    
+    
+    List<Num> selectNotNumberList();
+    
 }

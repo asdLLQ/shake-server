@@ -88,4 +88,9 @@ public class NumberServiceImpl implements NumberService {
 		resultInfo.setMessage("确认成功");
 		return resultInfo;
 	}
+
+	@Override
+	public List<Num> getNotSelectedNumberList() throws Exception {
+		return numMapper.selectNotNumberList();
+	}
 }
