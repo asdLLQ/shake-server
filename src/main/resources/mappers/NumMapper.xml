@@ -166,7 +166,7 @@ AND deleted = 1
 	List<Number> selectNotNumberList();
  -->
 <select id="selectNotNumberList" resultMap="BaseResultMap">
-SELECT * from t_number WHERE deleted=1
+SELECT * from t_number WHERE deleted=1 ORDER by number asc
 </select>
 
 
