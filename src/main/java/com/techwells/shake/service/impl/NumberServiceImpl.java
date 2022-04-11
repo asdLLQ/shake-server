@@ -35,21 +35,23 @@ public class NumberServiceImpl implements NumberService {
 	@Override
 	public Object getRandomNumber() throws Exception {
 		synchronized (this) {    //加对象锁，互相竞争资源
-			ResultInfo resultInfo=new ResultInfo();
-			List<Num> nums=numMapper.selectNumByLevel(1);  //获取第一个柜子的编号，没有被选择
-			if (nums.size()==0) {    //如果第一个柜子的没有了，那么选择第二个柜子
-				nums=numMapper.selectNumByLevel(2);  
+			ResultInfo resultInfo = new ResultInfo();
+			List<Num> nums = numMapper.selectNumByLevel(1);  //获取第一个柜子的编号，没有被选择
+			int numSize = nums.size();
+			if (numSize == 0) {    //如果第一个柜子的没有了，那么选择第二个柜子
+				nums = numMapper.selectNumByLevel(2);  
 			}
-			int random=new Random().nextInt(nums.size());   //[0,num.size)   随机数
+			int random = new Random().nextInt(numSize);   //[0,num.size)   随机数
 			//如果一次随机选择失败，应该继续，不该停止
-				Num num=nums.get(random);
-//				int count=numMapper.updateByPrimaryKeySelective(num);
-//				//如果更新成功，那么应该返回，否则将要继续
-//				if (count==1) {
-					resultInfo.setTotal(nums.size()-1);
-					resultInfo.setResult(nums.get(random));
-					resultInfo.setMessage("获取成功");
-					return resultInfo;
+			Num num = nums.get(random);
+			int count = numMapper.updateByPrimaryKeySelective(num);
+			//如果更新成功，那么应该返回，否则将要继续
+			if (count == 1) {
+				resultInfo.setTotal(nums.size()-1);
+				resultInfo.setResult(num);
+				resultInfo.setMessage("获取成功");
+				return resultInfo;
+			}
 		}
 	}
 
