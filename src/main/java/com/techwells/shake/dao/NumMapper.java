@@ -24,6 +24,9 @@ public interface NumMapper {
     
     List<Num> selectNumList(Integer level);
     
+    /*
+     * 查找数据Num
+    */
     List<Num> selectNumByLevel(Integer level);
     
     /*
