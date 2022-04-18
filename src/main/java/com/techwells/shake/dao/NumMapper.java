@@ -13,9 +13,14 @@ public interface NumMapper {
     int insertSelective(Num record);
 
     Num selectByPrimaryKey(Integer numberId);
-
+    
+    
     int updateByPrimaryKeySelective(Num record);
 
+    /*
+     * 更新数据Num
+    */
+    @ResidentMehtod
     int updateByPrimaryKey(Num record);
     
     List<Num> selectNumList(Integer level);
