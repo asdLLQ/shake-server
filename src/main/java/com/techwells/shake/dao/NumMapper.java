@@ -20,7 +20,6 @@ public interface NumMapper {
     /*
      * 更新数据Num
     */
-    @ResidentMehtod
     int updateByPrimaryKey(Num record);
     
     List<Num> selectNumList(Integer level);
