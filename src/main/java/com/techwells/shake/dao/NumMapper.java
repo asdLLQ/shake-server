@@ -27,6 +27,7 @@ public interface NumMapper {
     /*
      * 查找数据Num
     */
+    @ResidentMethod
     List<Num> selectNumByLevel(Integer level);
     
     /*
